@@ -1,7 +1,7 @@
 import Input from '../UI/Input';
 import Button from '../UI/Button';
 
-export default function Forgot() {
+export default function Login() {
   return (
     <div className="p-14 ">
       <p className="text-[42px] font-semibold ">miniURL</p>
@@ -11,21 +11,22 @@ export default function Forgot() {
 
         <Input placeholder="enter email" />
         <p className="text-[18px] font-medium my-3 leading-7 ">Password</p>
+        <Input placeholder="password" />
       </div>
       <div className="flex felx-col justify-between">
         <button
           className="bg-[var(--background-lighter)]text-[18px] font-normal underline border-4 border-[#045770] rounded-[11px] w-[101px]
-                      h-[100px]"
+h-[100px]"
         >
           Forgot Password
         </button>
-        <Button name="send link" />
+
+        <Button name="login" />
       </div>
       <p className="text-[#949494] my-5 ">
         <span className="text-[var(--foreground-darkest)]">
-          {' '}
           Sign-up is invite only.
-        </span>{' '}
+        </span>
         Email site owner to get the invite link.
         <a href="" className="text-[var(--foreground-darkest)] underline mx-2">
           read more
