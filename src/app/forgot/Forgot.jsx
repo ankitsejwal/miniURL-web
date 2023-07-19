@@ -10,7 +10,6 @@ export default function Forgot() {
         <p className="text-[18px] font-medium  my-3">Email</p>
 
         <Input placeholder="enter email" />
-        <p className="text-[18px] font-medium my-3 leading-7 ">Password</p>
       </div>
       <div className="flex felx-col justify-between">
         <button
