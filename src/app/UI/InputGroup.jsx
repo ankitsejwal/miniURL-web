@@ -10,6 +10,7 @@ export default function InputGroup({
   isValid,
   setIsValid,
   regex,
+  errorMessage,
 }) {
   return (
     <>
@@ -25,7 +26,7 @@ export default function InputGroup({
         regex={regex}
       />
 
-      {!isValid && <p className="text-pink-800 my-2">Enter a valid email</p>}
+      {!isValid && <p className="text-pink-800 my-2">{errorMessage}</p>}
     </>
   );
 }
