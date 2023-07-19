@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import InputGroup from '../UI/InputGroup';
 import Button from '../UI/Button';
+import axios from '../../api/axios';
 
 export default function SignIn({ setShowSignIn }) {
   const [email, setEmail] = useState('');
@@ -10,8 +11,37 @@ export default function SignIn({ setShowSignIn }) {
   const [password, setPassword] = useState('');
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})$/g;
+
+  const [auth, setAuth] = useState({});
+  const [errorMessage, setErrorMessage] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.post('/api/auth', JSON.stringify({ email, password }), {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        });
+        console.log(JSON.stringify(response));
+        const { jwtToken, roles } = response.data;
+      } catch (error) {
+        if (!error?.response) setErrorMessage('No server response');
+        else if (error.response?.status === 400) setErrorMessage('Missing username or password');
+        else if (error.response?.status === 401) setErrorMessage('Unauthorized');
+        else setErrorMessage('Login failed');
+      }
+    })();
+  }, [isFormValid]);
+
+  async function handleFormSubmit(event) {
+    event.preventDefault();
+    // check if email and password are valid
+    if (isEmailValid && isPasswordValid) setIsFormValid(true);
+  }
+
   return (
-    <form className="py-16" onSubmit={(event) => event.preventDefault()}>
+    <form className="py-16" onSubmit={handleFormSubmit}>
       <InputGroup
         label="Email"
         type="text"
@@ -43,7 +73,6 @@ h-[100px]"
         >
           Forgot Password
         </button>
-
         <Button name="login" />
       </div>
     </form>
