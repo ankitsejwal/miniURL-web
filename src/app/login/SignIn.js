@@ -9,8 +9,7 @@ export default function SignIn({ setShowSignIn }) {
 
   const [password, setPassword] = useState('');
   const [isPasswordValid, setIsPasswordValid] = useState(true);
-  const passwordRegex =
-    /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})$/g;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})$/g;
   return (
     <form className="py-16" onSubmit={(event) => event.preventDefault()}>
       <InputGroup
