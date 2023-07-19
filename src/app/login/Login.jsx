@@ -3,6 +3,7 @@
 import Input from '../UI/Input';
 import Button from '../UI/Button';
 import { useState } from 'react';
+import InputGroup from '../UI/InputGroup';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -19,9 +20,8 @@ export default function Login() {
       <p className="text-[42px] leading-10 font-semibold ">miniURL</p>
       <p className="text-[20px] font-normal ">https://sejw.al</p>
       <div className="py-16">
-        <label className="text-[18px] font-medium  my-3">Email</label>
-
-        <Input
+        <InputGroup
+          label="Email"
           type="text"
           placeholder="Enter email"
           value={email}
@@ -31,14 +31,8 @@ export default function Login() {
           regex={emailRegex}
         />
 
-        {!isEmailValid && (
-          <p className="text-pink-800 my-2">Enter a valid email</p>
-        )}
-
-        <label className="text-[18px] font-medium my-3 leading-7 ">
-          Password
-        </label>
-        <Input
+        <InputGroup
+          label="Password"
           type="password"
           placeholder="Enter password"
           value={password}
@@ -47,9 +41,6 @@ export default function Login() {
           setIsValid={setIsPasswordValid}
           regex={passwordRegex}
         />
-        {!isPasswordValid && (
-          <p className="text-pink-800 my-2">Enter a valid password</p>
-        )}
       </div>
       <div className="flex justify-between">
         <button

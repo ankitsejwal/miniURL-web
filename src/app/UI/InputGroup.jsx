@@ -1,11 +1,31 @@
 import React from 'react';
+import Input from './Input';
 
-export default function () {
+export default function InputGroup({
+  label,
+  type,
+  placeholder,
+  value,
+  setValue,
+  isValid,
+  setIsValid,
+  regex,
+}) {
   return (
-    <div>
-      <p className="text-[18px] font-medium  my-3">Email</p>
-      <Input placeholder="enter email" />
-      <p>Invalid email</p>
-    </div>
+    <>
+      <label className="text-[18px] font-medium  my-3">{label}</label>
+
+      <Input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        setValue={setValue}
+        isValid={isValid}
+        setIsValid={setIsValid}
+        regex={regex}
+      />
+
+      {!isValid && <p className="text-pink-800 my-2">Enter a valid email</p>}
+    </>
   );
 }
