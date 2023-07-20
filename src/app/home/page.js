@@ -7,9 +7,12 @@ import InputGroup from '../UI/InputGroup';
 import SquareButton from '../UI/SquareButton';
 import CustomLength from './CustomLength';
 import CustomLink from './CustomLink';
+import ShortLink from './ShortLink';
 
 export default function Home() {
   const [showCustomLength, setShowCustomLength] = useState(true);
+  const [showShortLink, setShowShortLink] = useState(false);
+
   return (
     <div className="p-14 flex flex-col space-y-6">
       <Header />
@@ -22,8 +25,10 @@ export default function Home() {
 
       <div className="flex">
         <SquareButton name="link created by you" />
-        <Button name="create link" />
+        <Button name="create link" setState={setShowShortLink} />
       </div>
+
+      {showShortLink ? <ShortLink /> : ''}
     </div>
   );
 }
