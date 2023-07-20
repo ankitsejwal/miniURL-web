@@ -2,7 +2,7 @@ import React from 'react';
 import SquareButton from '../UI/SquareButton';
 import Input from '../UI/Input';
 
-export default function CustomLength({ setShowCustomLength }) {
+export default function CustomLength({ setState }) {
   return (
     <div>
       <p className="text-[#949494] my-5">
@@ -13,10 +13,7 @@ export default function CustomLength({ setShowCustomLength }) {
         </a>
       </p>
       <div className="flex">
-        <SquareButton
-          name="create custom link"
-          setShowCustomLength={setShowCustomLength}
-        />
+        <SquareButton name="create custom link" setState={setState} />
         <Input type="text" placeholder="3" />
       </div>
     </div>

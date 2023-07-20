@@ -15,9 +15,9 @@ export default function Home() {
       <Header />
       <InputGroup label="Paste long url here" placeholder="https://longlink" />
       {showCustomLength ? (
-        <CustomLength setShowCustomLength={setShowCustomLength} />
+        <CustomLength setState={setShowCustomLength} />
       ) : (
-        <CustomLink setShowCustomLength={setShowCustomLength} />
+        <CustomLink setState={setShowCustomLength} />
       )}
 
       <div className="flex">

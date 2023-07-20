@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import InputGroup from '../UI/InputGroup';
 import Button from '../UI/Button';
 import axios from '../../api/axios';
+import SquareButton from '../UI/SquareButton';
 
 export default function SignIn({ setShowSignIn }) {
   const [email, setEmail] = useState('');
@@ -10,7 +11,8 @@ export default function SignIn({ setShowSignIn }) {
 
   const [password, setPassword] = useState('');
   const [isPasswordValid, setIsPasswordValid] = useState(true);
-  const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})$/g;
+  const passwordRegex =
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})$/g;
 
   const [auth, setAuth] = useState({});
   const [errorMessage, setErrorMessage] = useState(false);
@@ -19,16 +21,22 @@ export default function SignIn({ setShowSignIn }) {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.post('/api/auth', JSON.stringify({ email, password }), {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        });
+        const response = await axios.post(
+          '/api/auth',
+          JSON.stringify({ email, password }),
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          }
+        );
         console.log(JSON.stringify(response));
         const { jwtToken, roles } = response.data;
       } catch (error) {
         if (!error?.response) setErrorMessage('No server response');
-        else if (error.response?.status === 400) setErrorMessage('Missing username or password');
-        else if (error.response?.status === 401) setErrorMessage('Unauthorized');
+        else if (error.response?.status === 400)
+          setErrorMessage('Missing username or password');
+        else if (error.response?.status === 401)
+          setErrorMessage('Unauthorized');
         else setErrorMessage('Login failed');
       }
     })();
@@ -66,13 +74,7 @@ export default function SignIn({ setShowSignIn }) {
         regex={passwordRegex}
       />
       <div className="flex justify-between mt-6">
-        <button
-          className="bg-[var(--background-lighter)]text-[18px] font-normal underline border-4 border-[#045770] rounded-[11px] w-min-[101px] mr-6
-h-[100px]"
-          onClick={() => setShowSignIn(false)}
-        >
-          Forgot Password
-        </button>
+        <SquareButton name="Forgot Password" setState={setShowSignIn(false)} />
         <Button name="login" />
       </div>
     </form>
