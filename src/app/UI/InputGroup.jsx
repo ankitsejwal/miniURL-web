@@ -13,7 +13,7 @@ export default function InputGroup({
   errorMessage,
 }) {
   return (
-    <>
+    <div>
       <label className="text-[18px] font-medium  my-3">{label}</label>
 
       <Input
@@ -27,6 +27,6 @@ export default function InputGroup({
       />
 
       {!isValid && <p className="text-pink-800 my-2">{errorMessage}</p>}
-    </>
+    </div>
   );
 }
