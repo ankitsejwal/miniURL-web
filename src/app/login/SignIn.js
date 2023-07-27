@@ -4,15 +4,14 @@ import Button from '../UI/Button';
 import axios from '../../api/axios';
 import SquareButton from '../UI/SquareButton';
 
-export default function SignIn({ setShowSignIn }) {
+export default function SignIn({ showSignIn, setShowSignIn }) {
   const [email, setEmail] = useState('');
-  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isEmailValid, setIsEmailValid] = useState(false);
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
 
   const [password, setPassword] = useState('');
-  const [isPasswordValid, setIsPasswordValid] = useState(true);
-  const passwordRegex =
-    /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})$/g;
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})$/g;
 
   const [auth, setAuth] = useState({});
   const [errorMessage, setErrorMessage] = useState(false);
@@ -21,26 +20,27 @@ export default function SignIn({ setShowSignIn }) {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.post(
-          '/api/auth',
-          JSON.stringify({ email, password }),
-          {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          }
-        );
+        console.log(isFormValid);
+        console.log(isEmailValid);
+        console.log(isPasswordValid);
+        const response = await axios.post('/api/auth', JSON.stringify({ email, password }), {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        });
         console.log(JSON.stringify(response));
         const { jwtToken, roles } = response.data;
       } catch (error) {
         if (!error?.response) setErrorMessage('No server response');
-        else if (error.response?.status === 400)
-          setErrorMessage('Missing username or password');
-        else if (error.response?.status === 401)
-          setErrorMessage('Unauthorized');
+        else if (error.response?.status === 400) setErrorMessage('Missing username or password');
+        else if (error.response?.status === 401) setErrorMessage('Unauthorized');
         else setErrorMessage('Login failed');
       }
     })();
   }, [isFormValid]);
+
+  useEffect(() => {
+    console.log(showSignIn);
+  }, [showSignIn]);
 
   async function handleFormSubmit(event) {
     event.preventDefault();

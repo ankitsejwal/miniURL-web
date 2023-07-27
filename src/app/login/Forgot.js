@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import InputGroup from '../UI/InputGroup';
 import Button from '../UI/Button';
 
-export default function Forgot({ setShowSignIn }) {
+export default function Forgot({ showSignIn, setShowSignIn }) {
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
+
+  useEffect(() => {
+    console.log(showSignIn);
+  }, [showSignIn]);
 
   return (
     <form className="py-16" onSubmit={(event) => event.preventDefault()}>
