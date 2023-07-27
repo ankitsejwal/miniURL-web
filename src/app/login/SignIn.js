@@ -6,23 +6,24 @@ import SquareButton from '../UI/SquareButton';
 
 export default function SignIn({ showSignIn, setShowSignIn }) {
   const [email, setEmail] = useState('');
-  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(true);
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
 
   const [password, setPassword] = useState('');
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
   const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})$/g;
 
   const [auth, setAuth] = useState({});
   const [errorMessage, setErrorMessage] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
 
-  useEffect(() => {
-    (async () => {
+  async function handleFormSubmit(event) {
+    event.preventDefault();
+    // check if email and password are valid
+    if (isEmailValid && isPasswordValid) setIsFormValid(true);
+
+    if (isFormValid) {
       try {
-        console.log(isFormValid);
-        console.log(isEmailValid);
-        console.log(isPasswordValid);
         const response = await axios.post('/api/auth', JSON.stringify({ email, password }), {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
@@ -35,17 +36,7 @@ export default function SignIn({ showSignIn, setShowSignIn }) {
         else if (error.response?.status === 401) setErrorMessage('Unauthorized');
         else setErrorMessage('Login failed');
       }
-    })();
-  }, [isFormValid]);
-
-  useEffect(() => {
-    console.log(showSignIn);
-  }, [showSignIn]);
-
-  async function handleFormSubmit(event) {
-    event.preventDefault();
-    // check if email and password are valid
-    if (isEmailValid && isPasswordValid) setIsFormValid(true);
+    }
   }
 
   return (
@@ -74,8 +65,8 @@ export default function SignIn({ showSignIn, setShowSignIn }) {
         regex={passwordRegex}
       />
       <div className="flex justify-between mt-6">
-        <SquareButton name="Forgot Password" setState={setShowSignIn(false)} />
-        <Button name="login" />
+        <SquareButton name="Forgot Password" setState={setShowSignIn} />
+        <Button name="login" handleFormSubmit={handleFormSubmit} />
       </div>
     </form>
   );

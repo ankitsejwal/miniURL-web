@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import InputGroup from '../UI/InputGroup';
 import Button from '../UI/Button';
+import SquareButton from '../UI/SquareButton';
 
 export default function Forgot({ showSignIn, setShowSignIn }) {
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
 
-  useEffect(() => {
-    console.log(showSignIn);
-  }, [showSignIn]);
+  async function handleFormSubmit(event) {
+    event.preventDefault();
+    // check if email and password are valid
+    // if (isEmailValid && isPasswordValid) setIsFormValid(true);
+  }
 
   return (
     <form className="py-16" onSubmit={(event) => event.preventDefault()}>
@@ -26,15 +29,8 @@ export default function Forgot({ showSignIn, setShowSignIn }) {
       />
 
       <div className="flex justify-between mt-6">
-        <button
-          className="bg-[var(--background-lighter)]text-[18px] font-normal underline border-4 border-[#045770] rounded-[11px] w-min-[101px] mr-6
-    h-[100px]"
-          onClick={() => setShowSignIn(true)}
-        >
-          Go back to login
-        </button>
-
-        <Button name="Send Link" />
+        <SquareButton name="Go back to login" setState={setShowSignIn} />
+        <Button name="Send Link" handleFormSubmit={handleFormSubmit} />
       </div>
     </form>
   );
