@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import InputGroup from '../UI/InputGroup';
 import Button from '../UI/Button';
 import axios from '../../api/axios';
 import SquareButton from '../UI/SquareButton';
+import Context from '../context/Context';
 
 export default function SignIn({ showSignIn, setShowSignIn }) {
   const [email, setEmail] = useState('');
@@ -13,9 +14,10 @@ export default function SignIn({ showSignIn, setShowSignIn }) {
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})$/g;
 
-  const [auth, setAuth] = useState({});
   const [errorMessage, setErrorMessage] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
+
+  const { authState, setAuthState } = useContext(Context);
 
   async function handleFormSubmit(event) {
     event.preventDefault();
@@ -23,13 +25,15 @@ export default function SignIn({ showSignIn, setShowSignIn }) {
     if (isEmailValid && isPasswordValid) setIsFormValid(true);
 
     if (isFormValid) {
+      console.log('form submitted');
       try {
         const response = await axios.post('/api/auth', JSON.stringify({ email, password }), {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
         });
-        console.log(JSON.stringify(response));
-        const { jwtToken, roles } = response.data;
+        console.log('response: ', response.data);
+        setAuthState(response.data);
+        console.log('authState: ', authState);
       } catch (error) {
         if (!error?.response) setErrorMessage('No server response');
         else if (error.response?.status === 400) setErrorMessage('Missing username or password');
@@ -67,6 +71,11 @@ export default function SignIn({ showSignIn, setShowSignIn }) {
       <div className="flex justify-between mt-6">
         <SquareButton name="Forgot Password" setState={setShowSignIn} />
         <Button name="login" handleFormSubmit={handleFormSubmit} />
+      </div>
+
+      <div>
+        <p>token: {authState.token}</p>
+        <p>user: {authState.user.email}</p>
       </div>
     </form>
   );
