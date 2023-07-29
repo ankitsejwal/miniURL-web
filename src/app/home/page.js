@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Button from '../UI/Button';
 import Header from '../UI/Header';
 import InputGroup from '../UI/InputGroup';
@@ -8,8 +8,11 @@ import SquareButton from '../UI/SquareButton';
 import CustomLength from './CustomLength';
 import CustomLink from './CustomLink';
 import ShortLink from './ShortLink';
+import Context from '../context/Context';
 
 export default function Home() {
+  const authContext = useContext(Context);
+
   const [showCustomLength, setShowCustomLength] = useState(true);
   const [showShortLink, setShowShortLink] = useState(false);
 
