@@ -17,22 +17,19 @@ export default function SignIn({ showSignIn, setShowSignIn }) {
 
   const [authenticationSuccessful, setAuthenticationSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
-  const [isFormValid, setIsFormValid] = useState(false);
 
   const { authState, setAuthState } = useContext(Context);
 
   const router = useRouter();
   useEffect(() => {
     if (authenticationSuccessful) router.push('/home');
-    console.log('inside ');
   }, [authenticationSuccessful, router]);
 
   async function handleFormSubmit(event) {
     event.preventDefault();
-    // check if email and password are valid
-    if (isEmailValid && isPasswordValid) setIsFormValid(true);
 
-    if (isFormValid) {
+    // if email is valid submit the form
+    if (isEmailValid) {
       try {
         const response = await axios.post('/api/auth', JSON.stringify({ email, password }), {
           headers: { 'Content-Type': 'application/json' },
@@ -77,12 +74,7 @@ export default function SignIn({ showSignIn, setShowSignIn }) {
       />
       <div className="flex justify-between mt-6">
         <SquareButton name="Forgot Password" setState={setShowSignIn} />
-        <Button name="login" handleFormSubmit={handleFormSubmit} />
-      </div>
-
-      <div>
-        <p>token: {authState.token}</p>
-        <p>user: {authState.user.email}</p>
+        <Button name="login" />
       </div>
     </form>
   );

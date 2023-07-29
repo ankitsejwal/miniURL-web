@@ -10,8 +10,6 @@ export default function Forgot({ showSignIn, setShowSignIn }) {
 
   async function handleFormSubmit(event) {
     event.preventDefault();
-    // check if email and password are valid
-    // if (isEmailValid && isPasswordValid) setIsFormValid(true);
   }
 
   return (
@@ -30,7 +28,7 @@ export default function Forgot({ showSignIn, setShowSignIn }) {
 
       <div className="flex justify-between mt-6">
         <SquareButton name="Go back to login" setState={setShowSignIn} />
-        <Button name="Send Link" handleFormSubmit={handleFormSubmit} />
+        <Button name="Send Link" />
       </div>
     </form>
   );

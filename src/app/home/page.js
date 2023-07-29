@@ -40,7 +40,7 @@ export default function Home() {
 
       <div className="flex">
         <SquareButton name="link created by you" />
-        <Button name="create link" setState={setShowShortLink} />
+        <Button name="create link" />
       </div>
 
       {showShortLink ? <ShortLink /> : ''}
