@@ -22,6 +22,8 @@ export default function Home() {
   const urlRegex =
     /^(http|https):\/\/[a-zA-Z0-9]+([\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/g;
 
+  console.log(authContext.authState);
+
   return (
     <div className="p-14 flex flex-col space-y-6">
       <Header />

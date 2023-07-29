@@ -1,7 +1,12 @@
-import { useState } from 'react';
+'use client';
+
+import { useState, useEffect } from 'react';
 import Context from './Context';
+import { useRouter } from 'next/navigation';
 
 const Provider = ({ children }) => {
+  const router = useRouter();
+
   const token = localStorage.getItem('token');
   const expiresAt = localStorage.getItem('expiresAt');
   const user = localStorage.getItem('user');
@@ -12,7 +17,11 @@ const Provider = ({ children }) => {
     user: user ? JSON.parse(user) : {},
   });
 
-  const setAuthFunc = ({ token, user }) => {
+  useEffect(() => {
+    if (!authState.token) router.push('/login');
+  }, [authState]);
+
+  const setAuthFunc = ({ token, user, expiresAt }) => {
     localStorage.setItem('token', token);
     localStorage.setItem('expiresAt', expiresAt);
     localStorage.setItem('user', JSON.stringify(user));

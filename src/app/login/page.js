@@ -1,13 +1,20 @@
 'use client';
 
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Header from '../UI/Header';
 import SignIn from './SignIn';
 import Forgot from './Forgot';
-import Provider from '../context/Provider';
+import Context from '../context/Context';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
   const [showSignIn, setShowSignIn] = useState(true);
+  const { authState } = useContext(Context);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (authState.token) router.push('/');
+  });
 
   return (
     <div className="p-14">
