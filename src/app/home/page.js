@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Button from '../UI/Button';
 import Header from '../UI/Header';
 import InputGroup from '../UI/InputGroup';
@@ -9,6 +9,7 @@ import CustomLength from './CustomLength';
 import CustomLink from './CustomLink';
 import ShortLink from './ShortLink';
 import Context from '../context/Context';
+import axios from '../../api/axios';
 
 export default function Home() {
   const [showCustomLength, setShowCustomLength] = useState(true);
@@ -18,19 +19,57 @@ export default function Home() {
   const [longUrl, setLongUrl] = useState('');
   const [isLongUrlValid, setIsLongUrlValid] = useState(true);
   // state related to shorturl entered by user
-  const [shortUrl, setShortUrl] = useState('');
+  const [miniUrl, setMiniUrl] = useState('');
   // state related to custom length of short link
   const [customLength, setCustomLength] = useState(3);
   const [isLengthValid, setIsLengthValid] = useState(false);
   // state related to custom link
   const [customLink, setCustomLink] = useState('');
   const [urlAlreadyExists, setUrlAlreadyExists] = useState(false);
+  // state related to custom url
+  const [customUrl, setCustomUrl] = useState(false);
+  // state related to custom error messages
+  const [errorMessage, setErrorMessage] = useState('');
 
   const urlRegex =
     /^(http|https):\/\/[a-zA-Z0-9]+([\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/g;
 
-  const handleFormSubmit = (e) => {
+  useEffect(() => {
+    if (customLink.length > 1) setCustomUrl(true);
+    // Todo: set custom length to null or zero
+  }, [customLink]);
+
+  // import context
+  const { authState } = useContext(Context);
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+    console.log('user: ', authState.user._id);
+    console.log('longUrl: ', longUrl);
+    console.log('customUrl: ', customUrl);
+    console.log('customLink: ', customLink);
+    console.log('customLength: ', customLength);
+
+    try {
+      const response = await axios.post(
+        '/api/urls',
+        JSON.stringify({
+          user: authState.user._id,
+          customUrl,
+          longUrl,
+          customLink,
+          customLength,
+        }),
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+      console.log(response.data);
+      setMiniUrl('https://sejw.al/' + response.data.miniURL);
+    } catch (error) {
+      if (!error.response) console.log('No server response');
+      else console.log(error.response.data);
+      setErrorMessage(error.response.data.message);
+    }
   };
 
   return (
@@ -46,6 +85,7 @@ export default function Home() {
         setIsValid={setIsLongUrlValid}
         regex={urlRegex}
       />
+      {errorMessage ? <p>{errorMessage}</p> : ''}
       {showCustomLength ? (
         <CustomLength setState={setShowCustomLength} value={customLength} setValue={setCustomLength} />
       ) : (
@@ -57,7 +97,7 @@ export default function Home() {
         <Button name="create link" />
       </div>
 
-      {showShortLink ? <ShortLink value={shortUrl} setValue={null} /> : ''}
+      {showShortLink ? <ShortLink value={miniUrl} setValue={null} /> : ''}
     </form>
   );
 }

@@ -9,7 +9,7 @@ export default function ShortLink({ value }) {
       <input
         type="text"
         placeholder="https://sejw.al/xvf"
-        value={value}
+        defaultValue={value}
         className="bg-[var(--background-light)] w-full h-[100px] rounded-[11px] placeholder:text-white text-[20px] font-normal px-5"
       />
     </div>

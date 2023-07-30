@@ -9,7 +9,7 @@ export default function CustomLength({ setState, value, setValue }) {
         <span className="text-[var(--foreground-darkest)]">Select length. </span>
         Shorter the length, greater the collision.
         <br />
-        <a href="" className="text-[var(--foreground-darkest)] underline">
+        <a href="/" className="text-[var(--foreground-darkest)] underline">
           learn more
         </a>
       </p>
