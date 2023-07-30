@@ -2,19 +2,20 @@ import React from 'react';
 import SquareButton from '../UI/SquareButton';
 import Input from '../UI/Input';
 
-export default function CustomLength({ setState }) {
+export default function CustomLength({ setState, value }) {
   return (
     <div>
       <p className="text-[#949494] my-5">
-        <span className="text-[var(--foreground-darkest)]">select length.</span>
-        Shorter the length, more the collisions.
-        <a href="" className="text-[var(--foreground-darkest)] underline mx-2">
-          read more
+        <span className="text-[var(--foreground-darkest)]">Select length. </span>
+        Shorter the length, greater the collision.
+        <br />
+        <a href="" className="text-[var(--foreground-darkest)] underline">
+          learn more
         </a>
       </p>
       <div className="flex">
-        <SquareButton name="create custom link" setState={setState} />
-        <Input type="text" placeholder="3" />
+        <SquareButton name="custom link" setState={setState} value={value} />
+        <Input type="number" placeholder="enter length of your link" value={value} />
       </div>
     </div>
   );

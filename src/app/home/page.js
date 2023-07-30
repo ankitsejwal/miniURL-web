@@ -11,21 +11,28 @@ import ShortLink from './ShortLink';
 import Context from '../context/Context';
 
 export default function Home() {
-  const authContext = useContext(Context);
-
   const [showCustomLength, setShowCustomLength] = useState(true);
   const [showShortLink, setShowShortLink] = useState(false);
 
+  // states related to longurl entered by user
   const [longUrl, setLongUrl] = useState('');
   const [isLongUrlValid, setIsLongUrlValid] = useState(true);
+  // state related to shorturl entered by user
+  const [shortUrl, setShortUrl] = useState('');
+  // state related to custom length of short link
+  const [customLength, setCustomLength] = useState(3);
+  // state related to custom link
+  const [customLink, setCustomLink] = useState('');
 
   const urlRegex =
     /^(http|https):\/\/[a-zA-Z0-9]+([\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/g;
 
-  console.log(authContext.authState);
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
-    <div className="p-14 flex flex-col space-y-6">
+    <form className="p-14 flex flex-col space-y-6" onSubmit={handleFormSubmit}>
       <Header />
       <InputGroup
         label="Paste long url here"
@@ -38,17 +45,17 @@ export default function Home() {
         regex={urlRegex}
       />
       {showCustomLength ? (
-        <CustomLength setState={setShowCustomLength} />
+        <CustomLength setState={setShowCustomLength} value={customLength} />
       ) : (
-        <CustomLink setState={setShowCustomLength} />
+        <CustomLink setState={setShowCustomLength} value={customLink} />
       )}
 
       <div className="flex">
-        <SquareButton name="link created by you" />
+        <SquareButton name="your links" />
         <Button name="create link" />
       </div>
 
       {showShortLink ? <ShortLink /> : ''}
-    </div>
+    </form>
   );
 }
