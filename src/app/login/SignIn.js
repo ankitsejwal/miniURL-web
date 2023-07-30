@@ -72,7 +72,7 @@ export default function SignIn({ showSignIn, setShowSignIn }) {
         setIsValid={setIsPasswordValid}
         regex={passwordRegex}
       />
-      <div className="flex justify-between mt-6">
+      <div className="flex justify-between mt-6 gap-6">
         <SquareButton name="Forgot Password" setState={setShowSignIn} />
         <Button name="login" />
       </div>

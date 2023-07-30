@@ -13,7 +13,7 @@ export default function CustomLength({ setState, value, setValue }) {
           learn more
         </a>
       </p>
-      <div className="flex">
+      <div className="flex gap-6">
         <SquareButton name="custom link" setState={setState} value={value} />
         <Input type="number" placeholder="enter length of your link" value={value} setValue={setValue} />
       </div>

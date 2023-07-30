@@ -4,7 +4,7 @@ import SquareButton from '../UI/SquareButton';
 
 export default function ShortLink({ value }) {
   return (
-    <div className="flex">
+    <div className="flex gap-6">
       <SquareButton name="copy" />
       <input
         type="text"

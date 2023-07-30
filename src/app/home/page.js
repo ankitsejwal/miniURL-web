@@ -61,7 +61,7 @@ export default function Home() {
           customLink,
           customLength,
         }),
-        { headers: { 'Content-Type': 'application/json' } }
+        { headers: { 'Content-Type': 'application/json', miniUrl_auth_token: authState.token } }
       );
       console.log(response.data);
       setMiniUrl('https://sejw.al/' + response.data.miniURL);
@@ -92,7 +92,7 @@ export default function Home() {
         <CustomLink setState={setShowCustomLength} value={customLink} setValue={setCustomLink} />
       )}
 
-      <div className="flex">
+      <div className="flex  gap-6">
         <SquareButton name="your links" />
         <Button name="create link" />
       </div>
