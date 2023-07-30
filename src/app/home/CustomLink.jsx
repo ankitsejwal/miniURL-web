@@ -2,7 +2,7 @@ import React from 'react';
 import SquareButton from '../UI/SquareButton';
 import Input from '../UI/Input';
 
-export default function CustomLink({ setState, value }) {
+export default function CustomLink({ setState, value, setValue }) {
   return (
     <div>
       <p className="text-[#949494] my-5">
@@ -10,8 +10,8 @@ export default function CustomLink({ setState, value }) {
         <i>ex: sejw.al/ankit</i>
       </p>
       <div className="flex">
-        <SquareButton name="select length" setState={setState} value={value} />
-        <Input type="text" placeholder="sejw.al/john" />
+        <SquareButton name="select length" setState={setState} />
+        <Input type="text" placeholder="sejw.al/john" value={value} setValue={setValue} />
       </div>
     </div>
   );

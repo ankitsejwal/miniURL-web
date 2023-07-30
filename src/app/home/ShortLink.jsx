@@ -1,12 +1,17 @@
 import React from 'react';
 import Input from '../UI/Input';
-import Button from '../UI/Button';
+import SquareButton from '../UI/SquareButton';
 
-export default function ShortLink() {
+export default function ShortLink({ value }) {
   return (
-    <div className="flex  ">
-      <Input type="text" placeholder="https://sejw.al/xvf" className="mx-5" />
-      <Button name="copy" />
+    <div className="flex">
+      <SquareButton name="copy" />
+      <input
+        type="text"
+        placeholder="https://sejw.al/xvf"
+        value={value}
+        className="bg-[var(--background-light)] w-full h-[100px] rounded-[11px] placeholder:text-white text-[20px] font-normal px-5"
+      />
     </div>
   );
 }

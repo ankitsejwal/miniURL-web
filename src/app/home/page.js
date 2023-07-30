@@ -12,7 +12,7 @@ import Context from '../context/Context';
 
 export default function Home() {
   const [showCustomLength, setShowCustomLength] = useState(true);
-  const [showShortLink, setShowShortLink] = useState(false);
+  const [showShortLink, setShowShortLink] = useState(true);
 
   // states related to longurl entered by user
   const [longUrl, setLongUrl] = useState('');
@@ -21,8 +21,10 @@ export default function Home() {
   const [shortUrl, setShortUrl] = useState('');
   // state related to custom length of short link
   const [customLength, setCustomLength] = useState(3);
+  const [isLengthValid, setIsLengthValid] = useState(false);
   // state related to custom link
   const [customLink, setCustomLink] = useState('');
+  const [urlAlreadyExists, setUrlAlreadyExists] = useState(false);
 
   const urlRegex =
     /^(http|https):\/\/[a-zA-Z0-9]+([\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/g;
@@ -45,9 +47,9 @@ export default function Home() {
         regex={urlRegex}
       />
       {showCustomLength ? (
-        <CustomLength setState={setShowCustomLength} value={customLength} />
+        <CustomLength setState={setShowCustomLength} value={customLength} setValue={setCustomLength} />
       ) : (
-        <CustomLink setState={setShowCustomLength} value={customLink} />
+        <CustomLink setState={setShowCustomLength} value={customLink} setValue={setCustomLink} />
       )}
 
       <div className="flex">
@@ -55,7 +57,7 @@ export default function Home() {
         <Button name="create link" />
       </div>
 
-      {showShortLink ? <ShortLink /> : ''}
+      {showShortLink ? <ShortLink value={shortUrl} setValue={null} /> : ''}
     </form>
   );
 }
