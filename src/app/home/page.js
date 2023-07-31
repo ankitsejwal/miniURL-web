@@ -63,7 +63,6 @@ export default function Home() {
         }),
         { headers: { 'Content-Type': 'application/json', miniUrl_auth_token: authState.token } }
       );
-      console.log(response.data);
       setMiniUrl('https://sejw.al/' + response.data.miniURL);
     } catch (error) {
       if (!error.response) console.log('No server response');

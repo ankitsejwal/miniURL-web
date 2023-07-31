@@ -1,11 +1,16 @@
-import React from 'react';
-import Input from '../UI/Input';
+import React, { useState } from 'react';
 import SquareButton from '../UI/SquareButton';
 
 export default function ShortLink({ value }) {
+  const [isCopied, setIsCopied] = useState(false);
+
+  function copyToClipboard() {
+    navigator.clipboard.writeText(value);
+    setIsCopied(true);
+  }
   return (
-    <div className="flex gap-6">
-      <SquareButton name="copy" />
+    <div className="flex gap-6 rounded-lg">
+      <SquareButton name={isCopied ? 'copied' : 'copy'} onClick={copyToClipboard} />
       <input
         type="text"
         placeholder="https://sejw.al/xvf"
