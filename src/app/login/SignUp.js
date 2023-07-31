@@ -6,7 +6,7 @@ import axios from '../../api/axios';
 import SquareButton from '../UI/SquareButton';
 import Context from '../context/Context';
 
-export default function SignIn({ setShowComponent }) {
+export default function SignUp({ setShowComponent }) {
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
@@ -56,17 +56,41 @@ export default function SignIn({ setShowComponent }) {
   }
 
   return (
-    <form className="py-16" onSubmit={handleFormSubmit}>
+    <form className="flex flex-col space-y-3 py-16" onSubmit={handleFormSubmit}>
       <InputGroup
-        label="Email"
+        label="First Name"
         type="text"
-        placeholder="Enter email"
-        errorMessage="Enter a valid email"
+        placeholder="Enter first name"
+        errorMessage="Enter a valid first name"
         value={email}
         setValue={setEmail}
         isValid={isEmailValid}
         setIsValid={setIsEmailValid}
         regex={emailRegex}
+      />
+
+      <InputGroup
+        label="Last Name"
+        type="text"
+        placeholder="Enter last name"
+        errorMessage="Enter a valid last name"
+        value={email}
+        setValue={setEmail}
+        isValid={isEmailValid}
+        setIsValid={setIsEmailValid}
+        regex={emailRegex}
+      />
+
+      <InputGroup
+        label="Email"
+        type="email"
+        placeholder="Enter email"
+        errorMessage="Enter a valid email"
+        value={password}
+        setValue={setPassword}
+        isValid={isPasswordValid}
+        setIsValid={setIsPasswordValid}
+        regex={passwordRegex}
       />
 
       <InputGroup
@@ -80,12 +104,22 @@ export default function SignIn({ setShowComponent }) {
         setIsValid={setIsPasswordValid}
         regex={passwordRegex}
       />
+
+      <InputGroup
+        label="Confirm Password"
+        type="password"
+        placeholder="Confirm password"
+        errorMessage="Password did not match"
+        value={password}
+        setValue={setPassword}
+        isValid={isPasswordValid}
+        setIsValid={setIsPasswordValid}
+        regex={passwordRegex}
+      />
+
       <div className="flex justify-between mt-6 gap-6">
-        <SquareButton
-          name="Forgot Password"
-          onClick={() => setShowComponent('forgot')}
-        />
-        <Button name="login" />
+        <SquareButton name="Login" onClick={() => setShowComponent('signin')} />
+        <Button name="SignUp" />
       </div>
     </form>
   );

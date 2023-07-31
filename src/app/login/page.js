@@ -3,12 +3,13 @@
 import { useContext, useEffect, useState } from 'react';
 import Header from '../UI/Header';
 import SignIn from './SignIn';
+import SignUp from './SignUp';
 import Forgot from './Forgot';
 import Context from '../context/Context';
 import { useRouter } from 'next/navigation';
 
 export default function Login() {
-  const [showSignIn, setShowSignIn] = useState(true);
+  const [showComponent, setShowComponent] = useState('signup');
   const { authState } = useContext(Context);
   const router = useRouter();
 
@@ -19,14 +20,30 @@ export default function Login() {
   return (
     <div className="p-14">
       <Header />
-      {showSignIn ? (
-        <SignIn showSignIn={showSignIn} setShowSignIn={setShowSignIn} />
+      {showComponent === 'signin' ? (
+        <SignIn setShowComponent={setShowComponent} />
       ) : (
-        <Forgot showSignIn={showSignIn} setShowSignIn={setShowSignIn} />
+        ''
       )}
+      {showComponent === 'forgot' ? (
+        <Forgot setShowComponent={setShowComponent} />
+      ) : (
+        ''
+      )}
+      {showComponent === 'signup' ? (
+        <SignUp setShowComponent={setShowComponent} />
+      ) : (
+        ''
+      )}
+
       <p className="text-[#949494] my-5">
-        <span className="text-[var(--foreground-darkest)]">Sign-up is invite only.</span>
-        Email site owner to get the invite link.
+        <button
+          className="text-[var(--foreground-darkest)]"
+          onClick={() => setShowComponent('signup')}
+        >
+          <u>Sign-up</u> &nbsp;
+        </button>
+        is invite only for family & friends. Contact site owner for invite link.
         <a href="/" className="text-[var(--foreground-darkest)] underline mx-2">
           read more
         </a>
