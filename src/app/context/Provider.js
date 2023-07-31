@@ -44,7 +44,12 @@ const Provider = ({ children }) => {
 
   return (
     <Context.Provider
-      value={{ authState, setAuthState: (authInfo) => setAuthFunc(authInfo), isAuthenticated, logout }}
+      value={{
+        authState,
+        setAuthState: (authInfo) => setAuthFunc(authInfo),
+        isAuthenticated,
+        logout,
+      }}
     >
       {children}
     </Context.Provider>

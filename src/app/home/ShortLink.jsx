@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import SquareButton from '../UI/SquareButton';
+import { Icon } from 'react-icons-kit';
+import { ic_file_copy_outline } from 'react-icons-kit/md/ic_file_copy_outline';
 
 export default function ShortLink({ value }) {
   const [isCopied, setIsCopied] = useState(false);
@@ -10,7 +12,12 @@ export default function ShortLink({ value }) {
   }
   return (
     <div className="flex gap-6 rounded-lg">
-      <SquareButton name={isCopied ? 'copied' : 'copy'} onClick={copyToClipboard} />
+      <SquareButton
+        name={
+          isCopied ? 'copied' : <Icon icon={ic_file_copy_outline} size={30} />
+        }
+        onClick={copyToClipboard}
+      />
       <input
         type="text"
         placeholder="https://sejw.al/xvf"
