@@ -6,7 +6,7 @@ import axios from '../../api/axios';
 import SquareButton from '../UI/SquareButton';
 import Context from '../context/Context';
 
-export default function SignUp({ setShowComponent }) {
+export default function SignUp({ setCurrentLoginComponent }) {
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
@@ -58,6 +58,18 @@ export default function SignUp({ setShowComponent }) {
   return (
     <form className="flex flex-col space-y-3 py-16" onSubmit={handleFormSubmit}>
       <InputGroup
+        label="Invite Code"
+        type="text"
+        placeholder="Enter your invite code"
+        errorMessage="bad invite code"
+        value={email}
+        setValue={setEmail}
+        isValid={isEmailValid}
+        setIsValid={setIsEmailValid}
+        regex={emailRegex}
+      />
+
+      <InputGroup
         label="First Name"
         type="text"
         placeholder="Enter first name"
@@ -106,9 +118,9 @@ export default function SignUp({ setShowComponent }) {
       />
 
       <InputGroup
-        label="Confirm Password"
+        label="Repeat Password"
         type="password"
-        placeholder="Confirm password"
+        placeholder="Repeat password"
         errorMessage="Password did not match"
         value={password}
         setValue={setPassword}
@@ -117,8 +129,11 @@ export default function SignUp({ setShowComponent }) {
         regex={passwordRegex}
       />
 
-      <div className="flex justify-between mt-6 gap-6">
-        <SquareButton name="Login" onClick={() => setShowComponent('signin')} />
+      <div className="flex justify-between gap-6 pt-4">
+        <SquareButton
+          name="Login"
+          onClick={() => setCurrentLoginComponent('signin')}
+        />
         <Button name="SignUp" />
       </div>
     </form>

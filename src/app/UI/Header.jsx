@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
 
-export default function Header() {
+export default function Header({ currentLoginComponent }) {
   const { authState, logout, isAuthenticated } = useContext(Context);
   const logoutButton = <button onClick={logout}>Logout</button>;
   const welcomeMessage = <p>Welcome {authState.user.name}</p>;
@@ -12,7 +12,7 @@ export default function Header() {
         <p className="text-[20px] font-normal ">https://sejw.al</p>
       </div>
       <div className="text-right">
-        {isAuthenticated() ? logoutButton : ''}
+        {isAuthenticated() ? logoutButton : currentLoginComponent}
         {isAuthenticated() ? welcomeMessage : ''}
       </div>
     </div>

@@ -6,7 +6,7 @@ import axios from '../../api/axios';
 import SquareButton from '../UI/SquareButton';
 import Context from '../context/Context';
 
-export default function SignIn({ setShowComponent }) {
+export default function SignIn({ setCurrentLoginComponent }) {
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
@@ -83,7 +83,7 @@ export default function SignIn({ setShowComponent }) {
       <div className="flex justify-between mt-6 gap-6">
         <SquareButton
           name="Forgot Password"
-          onClick={() => setShowComponent('forgot')}
+          onClick={() => setCurrentLoginComponent('forgot')}
         />
         <Button name="login" />
       </div>

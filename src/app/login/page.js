@@ -9,37 +9,37 @@ import Context from '../context/Context';
 import { useRouter } from 'next/navigation';
 
 export default function Login() {
-  const [showComponent, setShowComponent] = useState('signup');
-  const { authState } = useContext(Context);
+  const [currentLoginComponent, setCurrentLoginComponent] = useState('signin');
+  const { isAuthenticated } = useContext(Context);
   const router = useRouter();
 
   useEffect(() => {
-    if (authState.token) router.push('/');
+    if (isAuthenticated()) router.push('/');
   });
 
   return (
     <div className="p-14">
-      <Header />
-      {showComponent === 'signin' ? (
-        <SignIn setShowComponent={setShowComponent} />
+      <Header currentLoginComponent={currentLoginComponent} />
+      {currentLoginComponent === 'signin' ? (
+        <SignIn setCurrentLoginComponent={setCurrentLoginComponent} />
       ) : (
         ''
       )}
-      {showComponent === 'forgot' ? (
-        <Forgot setShowComponent={setShowComponent} />
+      {currentLoginComponent === 'forgot' ? (
+        <Forgot setCurrentLoginComponent={setCurrentLoginComponent} />
       ) : (
         ''
       )}
-      {showComponent === 'signup' ? (
-        <SignUp setShowComponent={setShowComponent} />
+      {currentLoginComponent === 'signup' ? (
+        <SignUp setCurrentLoginComponent={setCurrentLoginComponent} />
       ) : (
         ''
       )}
 
-      <p className="text-[#949494] my-5">
+      <div className="text-[#949494]">
         <button
           className="text-[var(--foreground-darkest)]"
-          onClick={() => setShowComponent('signup')}
+          onClick={() => setCurrentLoginComponent('signup')}
         >
           <u>Sign-up</u> &nbsp;
         </button>
@@ -47,7 +47,7 @@ export default function Login() {
         <a href="/" className="text-[var(--foreground-darkest)] underline mx-2">
           read more
         </a>
-      </p>
+      </div>
     </div>
   );
 }
