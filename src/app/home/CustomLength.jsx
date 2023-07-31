@@ -14,7 +14,7 @@ export default function CustomLength({ setState, value, setValue }) {
         </a>
       </p>
       <div className="flex gap-6">
-        <SquareButton name="custom link" setState={setState} value={value} />
+        <SquareButton name="custom link" onClick={() => setState((prev) => !prev)} value={value} />
         <Input type="number" placeholder="enter length of your link" value={value} setValue={setValue} />
       </div>
     </div>

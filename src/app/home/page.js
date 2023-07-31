@@ -13,7 +13,7 @@ import axios from '../../api/axios';
 
 export default function Home() {
   const [showCustomLength, setShowCustomLength] = useState(true);
-  const [showShortLink, setShowShortLink] = useState(true);
+  const [showShortLink, setShowShortLink] = useState(false);
 
   // states related to longurl entered by user
   const [longUrl, setLongUrl] = useState('');
@@ -45,12 +45,6 @@ export default function Home() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('user: ', authState.user._id);
-    console.log('longUrl: ', longUrl);
-    console.log('customUrl: ', customUrl);
-    console.log('customLink: ', customLink);
-    console.log('customLength: ', customLength);
-
     try {
       const response = await axios.post(
         '/api/urls',
@@ -64,10 +58,11 @@ export default function Home() {
         { headers: { 'Content-Type': 'application/json', miniUrl_auth_token: authState.token } }
       );
       setMiniUrl('https://sejw.al/' + response.data.miniURL);
+      setShowShortLink(true);
     } catch (error) {
       if (!error.response) console.log('No server response');
-      else console.log(error.response.data);
-      setErrorMessage(error.response.data.message);
+      else console.log(error.response);
+      // setErrorMessage(error.response.data.message);
     }
   };
 
@@ -91,7 +86,7 @@ export default function Home() {
         <CustomLink setState={setShowCustomLength} value={customLink} setValue={setCustomLink} />
       )}
 
-      <div className="flex  gap-6">
+      <div className="flex gap-6">
         <SquareButton name="your links" />
         <Button name="create link" />
       </div>

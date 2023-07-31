@@ -10,7 +10,7 @@ export default function CustomLink({ setState, value, setValue }) {
         <i>ex: sejw.al/ankit</i>
       </p>
       <div className="flex gap-6">
-        <SquareButton name="select length" setState={setState} />
+        <SquareButton name="select length" onClick={() => setState((prev) => !prev)} />
         <Input type="text" placeholder="sejw.al/john" value={value} setValue={setValue} />
       </div>
     </div>

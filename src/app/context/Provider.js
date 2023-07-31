@@ -18,7 +18,7 @@ const Provider = ({ children }) => {
   });
 
   useEffect(() => {
-    if (!authState.token) router.push('/login');
+    if (!isAuthenticated()) router.push('/login');
   }, [authState]);
 
   const setAuthFunc = ({ token, user, expiresAt }) => {
