@@ -55,7 +55,7 @@ export default function Home() {
           customLink,
           customLength,
         }),
-        { headers: { 'Content-Type': 'application/json', miniUrl_auth_token: authState.token } }
+        { headers: { 'Content-Type': 'application/json', authorization: `Bearer ${authState.token}` } }
       );
       setMiniUrl('https://sejw.al/' + response.data.miniURL);
       setShowShortLink(true);
