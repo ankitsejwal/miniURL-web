@@ -13,11 +13,9 @@ export default function SignIn({ setCurrentLoginComponent }) {
 
   const [password, setPassword] = useState('');
   const [isPasswordValid, setIsPasswordValid] = useState(true);
-  const passwordRegex =
-    /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})$/g;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})$/g;
 
-  const [authenticationSuccessful, setAuthenticationSuccessful] =
-    useState(false);
+  const [authenticationSuccessful, setAuthenticationSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
 
   const { authState, setAuthState } = useContext(Context);
@@ -33,23 +31,17 @@ export default function SignIn({ setCurrentLoginComponent }) {
     // if email is valid submit the form
     if (isEmailValid) {
       try {
-        const response = await axios.post(
-          '/api/auth',
-          JSON.stringify({ email, password }),
-          {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          }
-        );
+        const response = await axios.post('/api/auth', JSON.stringify({ email, password }), {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        });
 
         setAuthState(response.data);
         setAuthenticationSuccessful(true);
       } catch (error) {
         if (!error?.response) setErrorMessage('No server response');
-        else if (error.response?.status === 400)
-          setErrorMessage('Missing username or password');
-        else if (error.response?.status === 401)
-          setErrorMessage('Unauthorized');
+        else if (error.response?.status === 400) setErrorMessage('Missing username or password');
+        else if (error.response?.status === 401) setErrorMessage('Unauthorized');
         else setErrorMessage('Login failed');
       }
     }
@@ -81,11 +73,8 @@ export default function SignIn({ setCurrentLoginComponent }) {
         regex={passwordRegex}
       />
       <div className="flex justify-between mt-6 gap-6">
-        <SquareButton
-          name="Forgot Password"
-          onClick={() => setCurrentLoginComponent('forgot')}
-        />
-        <Button name="login" />
+        <SquareButton name="Forgot Password" onClick={() => setCurrentLoginComponent('forgot')} />
+        <Button name="Sign-in" />
       </div>
     </form>
   );
