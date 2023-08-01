@@ -13,7 +13,7 @@ export default function InputGroup({
   errorMessage,
 }) {
   return (
-    <div>
+    <div className="w-full">
       <label className="text-[18px] font-medium  my-3">{label}</label>
 
       <Input

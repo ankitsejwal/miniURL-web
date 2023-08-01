@@ -12,18 +12,18 @@ export default function ShortLink({ value }) {
     setIsCopied(true);
   }
   return (
-    <div className="flex gap-6 rounded-lg">
-      <SquareButton
-        name={
-          isCopied ? <Icon icon={ic_file_copy} size={30} /> : <Icon icon={ic_file_copy_outline} size={30} />
-        }
-        onClick={copyToClipboard}
-      />
+    <div className="flex gap-6 rounded-lg py-10">
       <input
         type="text"
         placeholder="https://sejw.al/xvf"
         defaultValue={value}
         className="bg-[var(--background-light)] w-full h-[100px] rounded-[11px] placeholder:text-white text-[20px] font-normal px-5"
+      />
+      <SquareButton
+        name={
+          isCopied ? <Icon icon={ic_file_copy} size={30} /> : <Icon icon={ic_file_copy_outline} size={30} />
+        }
+        onClick={copyToClipboard}
       />
     </div>
   );

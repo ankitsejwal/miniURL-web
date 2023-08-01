@@ -10,6 +10,9 @@ import CustomLink from './CustomLink';
 import ShortLink from './ShortLink';
 import Context from '../context/Context';
 import axios from '../../api/axios';
+import { Icon } from 'react-icons-kit';
+import { ic_content_paste } from 'react-icons-kit/md/ic_content_paste';
+import { ic_format_list_numbered } from 'react-icons-kit/md/ic_format_list_numbered';
 
 export default function Home() {
   const [showCustomLength, setShowCustomLength] = useState(true);
@@ -66,19 +69,27 @@ export default function Home() {
     }
   };
 
+  const handlePaste = async () => {
+    setLongUrl(await navigator.clipboard.readText());
+  };
+
   return (
     <form className="p-14 flex flex-col space-y-6" onSubmit={handleFormSubmit}>
       <Header />
-      <InputGroup
-        label="Paste long url here"
-        placeholder="https://longlink"
-        errorMessage="enter valid URL"
-        value={longUrl}
-        setValue={setLongUrl}
-        isValid={isLongUrlValid}
-        setIsValid={setIsLongUrlValid}
-        regex={urlRegex}
-      />
+      <div className="flex gap-6 items-end">
+        <InputGroup
+          label="Paste long url here"
+          placeholder="https://paste-a-long-link-here"
+          errorMessage="enter valid URL"
+          value={longUrl}
+          setValue={setLongUrl}
+          isValid={isLongUrlValid}
+          setIsValid={setIsLongUrlValid}
+          regex={urlRegex}
+        />
+        <SquareButton name={<Icon icon={ic_content_paste} size={30} />} onClick={handlePaste} />
+      </div>
+
       {errorMessage ? <p>{errorMessage}</p> : ''}
       {showCustomLength ? (
         <CustomLength setState={setShowCustomLength} value={customLength} setValue={setCustomLength} />
@@ -87,7 +98,7 @@ export default function Home() {
       )}
 
       <div className="flex gap-6">
-        <SquareButton name="your links" />
+        <SquareButton name={<Icon icon={ic_format_list_numbered} size={30} />} />
         <Button name="create link" />
       </div>
 

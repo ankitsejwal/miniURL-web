@@ -10,17 +10,16 @@ export default function Header({ currentLoginComponent }) {
       <Icon icon={ic_logout} size={30} /> logout
     </button>
   );
-  const welcomeMessage = <p>Welcome {authState.user.name}</p>;
+
   return (
     <div className="flex justify-between">
       <div>
         <p className="text-[42px] leading-10 font-semibold ">miniURL</p>
-        <p className="text-[20px] font-normal ">https://sejw.al</p>
+        <p className="text-[20px] font-normal ">
+          {isAuthenticated() ? 'https://sejw.al/' + authState.user.name : 'https://sejw.al'}
+        </p>
       </div>
-      <div className="text-right">
-        {isAuthenticated() ? logoutButton : currentLoginComponent}
-        {isAuthenticated() ? welcomeMessage : ''}
-      </div>
+      <div className="text-right">{isAuthenticated() ? logoutButton : currentLoginComponent}</div>
     </div>
   );
 }
