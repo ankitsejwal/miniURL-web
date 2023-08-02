@@ -40,6 +40,7 @@ export default function Login() {
         <button
           className="text-[var(--foreground-darkest)]"
           onClick={() => setCurrentLoginComponent('signup')}
+          type="button"
         >
           <u>Sign-up</u> &nbsp;
         </button>

@@ -1,19 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export default function Input({ placeholder, type, style, value, setValue, isValid, setIsValid, regex }) {
-  function checkValue() {
-    const result = regex.test(value);
-    setIsValid(result);
-  }
+  useEffect(() => {
+    if (value) setIsValid(regex.test(value));
+  }, [value]);
 
   return (
     <input
       type={type}
       placeholder={placeholder}
       value={value}
-      onChange={(event) => setValue(event.target.value)}
-      // onFocus={checkValue}
-      // onBlur={checkValue}
+      onChange={(e) => setValue(e.target.value)}
       style={style}
       className="bg-[var(--background-light)] w-full h-[100px] rounded-[11px] placeholder:text-white text-[20px] font-normal px-5"
     />

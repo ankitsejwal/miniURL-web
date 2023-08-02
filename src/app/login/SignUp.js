@@ -8,19 +8,23 @@ import Context from '../context/Context';
 
 export default function SignUp({ setCurrentLoginComponent }) {
   const [inviteCode, setInviteCode] = useState('');
+  const [isValidInviteCode, setIsValidInviteCode] = useState(true);
+  const inviteCodeRegex = /[A-Za-z0-9]+/g;
 
   const [name, setName] = useState('');
+  const [isValidName, setIsValidName] = useState(true);
+  const nameRegex = /^(?=.*\S).{3,}$/g;
 
   const [email, setEmail] = useState('');
-  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isValidEmail, setIsValidEmail] = useState(true);
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
 
   const [password, setPassword] = useState('');
-  const [isPasswordValid, setIsPasswordValid] = useState(true);
-  const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})$/g;
+  const [isValidPassword, setIsValidPassword] = useState(true);
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}$/g;
 
   const [repeatPassword, setRepeatPassword] = useState('');
-  const [isRepeatPasswordValid, setIsRepeatPasswordValid] = useState(false);
+  const [isValidRepeatPassword, setIsValidRepeatPassword] = useState(true);
 
   const [authenticationSuccessful, setAuthenticationSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
@@ -59,6 +63,7 @@ export default function SignUp({ setCurrentLoginComponent }) {
 
   return (
     <form className="flex flex-col space-y-3 py-16" onSubmit={handleFormSubmit}>
+      <p>{errorMessage ? errorMessage : ''}</p>
       <InputGroup
         label="Invite Code"
         type="text"
@@ -66,21 +71,21 @@ export default function SignUp({ setCurrentLoginComponent }) {
         errorMessage="bad invite code"
         value={inviteCode}
         setValue={setInviteCode}
-        isValid={isEmailValid}
-        setIsValid={setIsEmailValid}
-        regex={emailRegex}
+        isValid={isValidInviteCode}
+        setIsValid={setIsValidInviteCode}
+        regex={inviteCodeRegex}
       />
 
       <InputGroup
         label="Name"
         type="text"
         placeholder="Enter name"
-        errorMessage="Enter a valid name"
+        errorMessage="Name should be atleast 3 characters long"
         value={name}
         setValue={setName}
-        isValid={isEmailValid}
-        setIsValid={setIsEmailValid}
-        regex={emailRegex}
+        isValid={isValidName}
+        setIsValid={setIsValidName}
+        regex={nameRegex}
       />
 
       <InputGroup
@@ -90,9 +95,9 @@ export default function SignUp({ setCurrentLoginComponent }) {
         errorMessage="Enter a valid email"
         value={email}
         setValue={setEmail}
-        isValid={isPasswordValid}
-        setIsValid={setIsPasswordValid}
-        regex={passwordRegex}
+        isValid={isValidEmail}
+        setIsValid={setIsValidEmail}
+        regex={emailRegex}
       />
 
       <InputGroup
@@ -102,8 +107,8 @@ export default function SignUp({ setCurrentLoginComponent }) {
         errorMessage="Enter a valid password"
         value={password}
         setValue={setPassword}
-        isValid={isPasswordValid}
-        setIsValid={setIsPasswordValid}
+        isValid={isValidPassword}
+        setIsValid={setIsValidPassword}
         regex={passwordRegex}
       />
 
@@ -114,8 +119,8 @@ export default function SignUp({ setCurrentLoginComponent }) {
         errorMessage="Password did not match"
         value={repeatPassword}
         setValue={setRepeatPassword}
-        isValid={isPasswordValid}
-        setIsValid={setIsPasswordValid}
+        isValid={isValidRepeatPassword}
+        setIsValid={setIsValidRepeatPassword}
         regex={passwordRegex}
       />
 
