@@ -8,12 +8,12 @@ import Context from '../context/Context';
 
 export default function SignIn({ setCurrentLoginComponent }) {
   const [email, setEmail] = useState('');
-  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isValidEmail, setIsValidEmail] = useState(true);
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
 
   const [password, setPassword] = useState('');
-  const [isPasswordValid, setIsPasswordValid] = useState(true);
-  const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})$/g;
+  const [isValidPassword, setIsValidPassword] = useState(true);
+  const passwordRegex = /^(?=.*\S).{3,}$/g;
 
   const [authenticationSuccessful, setAuthenticationSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
@@ -28,8 +28,7 @@ export default function SignIn({ setCurrentLoginComponent }) {
   async function handleFormSubmit(event) {
     event.preventDefault();
 
-    // if email is valid submit the form
-    if (isEmailValid) {
+    if (isValidEmail && isValidPassword) {
       try {
         const response = await axios.post('/api/auth', JSON.stringify({ email, password }), {
           headers: { 'Content-Type': 'application/json' },
@@ -49,6 +48,7 @@ export default function SignIn({ setCurrentLoginComponent }) {
 
   return (
     <form className="py-16" onSubmit={handleFormSubmit}>
+      <p>{errorMessage ? errorMessage : ''}</p>
       <InputGroup
         label="Email"
         type="text"
@@ -56,8 +56,8 @@ export default function SignIn({ setCurrentLoginComponent }) {
         errorMessage="Enter a valid email"
         value={email}
         setValue={setEmail}
-        isValid={isEmailValid}
-        setIsValid={setIsEmailValid}
+        isValid={isValidEmail}
+        setIsValid={setIsValidEmail}
         regex={emailRegex}
       />
 
@@ -65,11 +65,11 @@ export default function SignIn({ setCurrentLoginComponent }) {
         label="Password"
         type="password"
         placeholder="Enter password"
-        errorMessage="Enter a valid password"
+        errorMessage="Type more than 3 characters"
         value={password}
         setValue={setPassword}
-        isValid={isPasswordValid}
-        setIsValid={setIsPasswordValid}
+        isValid={isValidPassword}
+        setIsValid={setIsValidPassword}
         regex={passwordRegex}
       />
       <div className="flex justify-between mt-6 gap-6">
