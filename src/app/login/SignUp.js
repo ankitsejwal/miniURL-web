@@ -7,6 +7,8 @@ import SquareButton from '../UI/SquareButton';
 import Context from '../context/Context';
 
 export default function SignUp({ setCurrentLoginComponent }) {
+  const { setAuthState } = useContext(Context);
+
   const [inviteCode, setInviteCode] = useState('');
   const [isValidInviteCode, setIsValidInviteCode] = useState(true);
   const inviteCodeRegex = /[A-Za-z0-9]+/g;
@@ -28,8 +30,6 @@ export default function SignUp({ setCurrentLoginComponent }) {
 
   const [authenticationSuccessful, setAuthenticationSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
-
-  const { authState, setAuthState } = useContext(Context);
 
   const router = useRouter();
 
@@ -56,7 +56,7 @@ export default function SignUp({ setCurrentLoginComponent }) {
     } catch (error) {
       if (!error?.response) setErrorMessage('No server response');
       else if (error.response?.status === 400) setErrorMessage(error.response.data.message);
-      else if (error.response?.status === 401) setErrorMessage('Unauthorized');
+      else if (error.response?.status === 401) setErrorMessage(error.response.data.message);
       else setErrorMessage('Login failed');
     }
   }

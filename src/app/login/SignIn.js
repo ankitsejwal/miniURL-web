@@ -7,6 +7,8 @@ import SquareButton from '../UI/SquareButton';
 import Context from '../context/Context';
 
 export default function SignIn({ setCurrentLoginComponent }) {
+  const { setAuthState } = useContext(Context);
+
   const [email, setEmail] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
@@ -17,8 +19,6 @@ export default function SignIn({ setCurrentLoginComponent }) {
 
   const [authenticationSuccessful, setAuthenticationSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
-
-  const { authState, setAuthState } = useContext(Context);
 
   const router = useRouter();
   useEffect(() => {
@@ -38,9 +38,10 @@ export default function SignIn({ setCurrentLoginComponent }) {
         setAuthState(response.data);
         setAuthenticationSuccessful(true);
       } catch (error) {
+        console.log(error.response.data.message);
         if (!error?.response) setErrorMessage('No server response');
-        else if (error.response?.status === 400) setErrorMessage('Missing username or password');
-        else if (error.response?.status === 401) setErrorMessage('Unauthorized');
+        else if (error.response?.status === 400) setErrorMessage(error.response.data.message);
+        else if (error.response?.status === 401) setErrorMessage(error.response.data.message);
         else setErrorMessage('Login failed');
       }
     }
