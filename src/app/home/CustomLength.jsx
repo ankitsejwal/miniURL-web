@@ -4,7 +4,7 @@ import Input from '../UI/Input';
 import { Icon } from 'react-icons-kit';
 import { ic_link } from 'react-icons-kit/md/ic_link';
 
-export default function CustomLength({ setState, value, setValue }) {
+export default function CustomLength({ setState, value, setValue, setIsValid, regex }) {
   return (
     <div>
       <p className="text-[#949494] my-5">
@@ -23,6 +23,8 @@ export default function CustomLength({ setState, value, setValue }) {
           style={{ textAlign: 'center' }}
           value={value}
           setValue={setValue}
+          setIsValid={setIsValid}
+          regex={regex}
         />
       </div>
     </div>

@@ -20,22 +20,24 @@ export default function Home() {
 
   // states related to longurl entered by user
   const [longUrl, setLongUrl] = useState('');
-  const [isLongUrlValid, setIsLongUrlValid] = useState(true);
+  const [isValidLongUrl, setIsValidLongUrl] = useState(true);
+  const longUrlRegex =
+    /^(http|https):\/\/[a-zA-Z0-9]+([\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/g;
+
   // state related to shorturl entered by user
   const [miniUrl, setMiniUrl] = useState('');
   // state related to custom length of short link
   const [customLength, setCustomLength] = useState(3);
-  const [isLengthValid, setIsLengthValid] = useState(false);
+  const [isValidCustomLength, setIsValidCustomLength] = useState(true);
+  const customLengthRegex = /^(?!0$)\d+$/g;
   // state related to custom link
   const [customLink, setCustomLink] = useState('');
-  const [urlAlreadyExists, setUrlAlreadyExists] = useState(false);
+  const [isValidCustomLink, setIsValidCustomLink] = useState(true);
+  const customLinkRegex = /^[a-zA-Z0-9]+$/g;
   // state related to custom url
   const [customUrl, setCustomUrl] = useState(false);
   // state related to custom error messages
   const [errorMessage, setErrorMessage] = useState('');
-
-  const urlRegex =
-    /^(http|https):\/\/[a-zA-Z0-9]+([\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/g;
 
   useEffect(() => {
     if (customLink.length > 1) setCustomUrl(true);
@@ -63,9 +65,10 @@ export default function Home() {
       setMiniUrl('https://sejw.al/' + response.data.miniURL);
       setShowShortLink(true);
     } catch (error) {
-      if (!error.response) console.log('No server response');
-      else console.log(error.response);
-      // setErrorMessage(error.response.data.message);
+      if (!error?.response) setErrorMessage('No server response');
+      else if (error.response?.status === 400) setErrorMessage(error.response.data.message);
+      else if (error.response?.status === 401) setErrorMessage(error.response.data.message);
+      else setErrorMessage('Login failed');
     }
   };
 
@@ -76,6 +79,7 @@ export default function Home() {
   return (
     <form className="p-14 flex flex-col space-y-6" onSubmit={handleFormSubmit}>
       <Header />
+      <p>{errorMessage ? errorMessage : ''}</p>
       <div className="flex gap-6 items-end">
         <InputGroup
           label="Paste long url here"
@@ -83,18 +87,32 @@ export default function Home() {
           errorMessage="enter valid URL"
           value={longUrl}
           setValue={setLongUrl}
-          isValid={isLongUrlValid}
-          setIsValid={setIsLongUrlValid}
-          regex={urlRegex}
+          isValid={isValidLongUrl}
+          setIsValid={setIsValidLongUrl}
+          regex={longUrlRegex}
         />
         <SquareButton name={<Icon icon={ic_content_paste} size={30} />} onClick={handlePaste} />
       </div>
 
       {errorMessage ? <p>{errorMessage}</p> : ''}
       {showCustomLength ? (
-        <CustomLength setState={setShowCustomLength} value={customLength} setValue={setCustomLength} />
+        <CustomLength
+          setState={setShowCustomLength}
+          value={customLength}
+          setValue={setCustomLength}
+          isValid={isValidCustomLength}
+          setIsValid={setIsValidCustomLength}
+          regex={customLengthRegex}
+        />
       ) : (
-        <CustomLink setState={setShowCustomLength} value={customLink} setValue={setCustomLink} />
+        <CustomLink
+          setState={setShowCustomLength}
+          value={customLink}
+          setValue={setCustomLink}
+          isValid={isValidCustomLink}
+          setIsValid={setIsValidCustomLink}
+          regex={customLinkRegex}
+        />
       )}
 
       <div className="flex gap-6">

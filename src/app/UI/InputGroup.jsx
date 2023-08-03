@@ -14,8 +14,8 @@ export default function InputGroup({
 }) {
   return (
     <div className="w-full">
+      {!isValid && <p className="text-pink-800 my-2">{errorMessage}</p>}
       <label className="text-[18px] font-medium  my-3">{label}</label>
-
       <Input
         type={type}
         placeholder={placeholder}
@@ -25,8 +25,6 @@ export default function InputGroup({
         setIsValid={setIsValid}
         regex={regex}
       />
-
-      {!isValid && <p className="text-pink-800 my-2">{errorMessage}</p>}
     </div>
   );
 }

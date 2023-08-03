@@ -3,8 +3,9 @@ import SquareButton from '../UI/SquareButton';
 import Input from '../UI/Input';
 import { Icon } from 'react-icons-kit';
 import { sortNumericAsc } from 'react-icons-kit/icomoon/sortNumericAsc';
+import InputGroup from '../UI/InputGroup';
 
-export default function CustomLink({ setState, value, setValue }) {
+export default function CustomLink({ setState, value, setValue, isValid, setIsValid, regex }) {
   return (
     <div>
       <p className="text-[#949494] my-5">
@@ -16,7 +17,18 @@ export default function CustomLink({ setState, value, setValue }) {
           name={<Icon icon={sortNumericAsc} size={30} />}
           onClick={() => setState((prev) => !prev)}
         />
-        <Input type="text" placeholder="sejw.al/john" value={value} setValue={setValue} />
+
+        <InputGroup
+          label=""
+          type="text"
+          placeholder="sejw.al/john"
+          value={value}
+          setValue={setValue}
+          isValid={isValid}
+          setIsValid={setIsValid}
+          regex={regex}
+          errorMessage="type more than 2 characters"
+        />
       </div>
     </div>
   );
