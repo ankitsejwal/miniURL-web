@@ -13,12 +13,14 @@ import axios from '../../api/axios';
 import { Icon } from 'react-icons-kit';
 import { ic_content_paste } from 'react-icons-kit/md/ic_content_paste';
 import { ic_format_list_numbered } from 'react-icons-kit/md/ic_format_list_numbered';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const [showCustomLength, setShowCustomLength] = useState(true);
   const [showShortLink, setShowShortLink] = useState(false);
 
   // states related to longurl entered by user
+  const router = useRouter();
   const [longUrl, setLongUrl] = useState('');
   const [isValidLongUrl, setIsValidLongUrl] = useState(true);
   const longUrlRegex =
@@ -79,7 +81,6 @@ export default function Home() {
   return (
     <form className="p-14 flex flex-col space-y-6" onSubmit={handleFormSubmit}>
       <Header />
-      <p>{errorMessage ? errorMessage : ''}</p>
       <div className="flex gap-6 items-end">
         <InputGroup
           label="Paste long url here"
@@ -94,7 +95,7 @@ export default function Home() {
         <SquareButton name={<Icon icon={ic_content_paste} size={30} />} onClick={handlePaste} />
       </div>
 
-      {errorMessage ? <p>{errorMessage}</p> : ''}
+      <p>{errorMessage ? { errorMessage } : ''}</p>
       {showCustomLength ? (
         <CustomLength
           setState={setShowCustomLength}
@@ -116,7 +117,9 @@ export default function Home() {
       )}
 
       <div className="flex gap-6">
-        <SquareButton name={<Icon icon={ic_format_list_numbered} size={30} />} />
+        <SquareButton
+          name={<Icon icon={ic_format_list_numbered} size={30} onClick={() => router.push('links')} />}
+        />
         <Button name="create link" />
       </div>
 
