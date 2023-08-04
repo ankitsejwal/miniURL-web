@@ -6,6 +6,10 @@ import { sortNumericAsc } from 'react-icons-kit/icomoon/sortNumericAsc';
 import InputGroup from '../UI/InputGroup';
 
 export default function CustomLink({ setState, value, setValue, isValid, setIsValid, regex }) {
+  const toggleComponent = () => {
+    setValue('');
+    setState((prev) => !prev);
+  };
   return (
     <div>
       <p className="text-[#949494] my-5">
@@ -13,10 +17,7 @@ export default function CustomLink({ setState, value, setValue, isValid, setIsVa
         <i>ex: sejw.al/ankit</i>
       </p>
       <div className="flex gap-6">
-        <SquareButton
-          name={<Icon icon={sortNumericAsc} size={30} />}
-          onClick={() => setState((prev) => !prev)}
-        />
+        <SquareButton name={<Icon icon={sortNumericAsc} size={30} />} onClick={toggleComponent} />
 
         <InputGroup
           label=""

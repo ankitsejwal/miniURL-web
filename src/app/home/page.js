@@ -43,7 +43,7 @@ export default function Home() {
 
   useEffect(() => {
     if (customLink.length > 1) setCustomUrl(true);
-    // Todo: set custom length to null or zero
+    else setCustomUrl(false);
   }, [customLink]);
 
   // import context
@@ -68,8 +68,8 @@ export default function Home() {
       setShowShortLink(true);
     } catch (error) {
       if (!error?.response) setErrorMessage('No server response');
-      else if (error.response?.status === 400) setErrorMessage(error.response.data.message);
-      else if (error.response?.status === 401) setErrorMessage(error.response.data.message);
+      else if (error.response?.status === 400) setErrorMessage(error.response.data?.message);
+      else if (error.response?.status === 401) setErrorMessage(error.response.data?.message);
       else setErrorMessage('Login failed');
     }
   };
@@ -95,7 +95,7 @@ export default function Home() {
         <SquareButton name={<Icon icon={ic_content_paste} size={30} />} onClick={handlePaste} />
       </div>
 
-      <p>{errorMessage ? { errorMessage } : ''}</p>
+      <p>{errorMessage ? errorMessage : ''}</p>
       {showCustomLength ? (
         <CustomLength
           setState={setShowCustomLength}
